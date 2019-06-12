@@ -1,7 +1,18 @@
 import { createStore } from 'redux';
 
 // Reducer
-const INITIAL_STATE = ['Fazer café', 'Estudar React Native'];
+const INITIAL_STATE = [
+  {
+    id: 1,
+    text: 'Fazer café',
+    completed: true,
+  },
+  {
+    id: 2,
+    text: 'Estudar React Native',
+    completed: false,
+  },
+];
 
 // Actions
 
@@ -9,11 +20,22 @@ const INITIAL_STATE = ['Fazer café', 'Estudar React Native'];
 // Marcar todo como completo
 
 function reducer(state = INITIAL_STATE, action) {
-  if (action.type === 'ADD_TODO') {
-    return [...state, action.text];
-  }
+  switch (action.type) {
+    case 'ADD_TODO':
+      return [
+        ...state,
+        {
+          id: Math.random(),
+          text: action.text,
+          completed: false,
+        },
+      ];
+    case 'MARK_AS_COMPLETED':
+      return state.map(todo => (todo.id === action.id ? { ...todo, completed: !todo.completed } : todo));
 
-  return state;
+    default:
+      return state;
+  }
 }
 
 const store = createStore(reducer);
