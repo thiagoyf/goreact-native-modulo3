@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { ActivityIndicator } from 'react-native';
 
@@ -11,6 +12,12 @@ import {
 } from './styles';
 
 class Login extends Component {
+  static propTypes = {
+    loginRequest: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.bool.isRequired,
+  };
+
   state = {
     username: '',
   };
